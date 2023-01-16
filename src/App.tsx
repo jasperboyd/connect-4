@@ -1,10 +1,11 @@
 import React from 'react';
-import { NewPlayerForm } from './NewPlayerForm';
+import { GameSetupForm } from './GameSetupForm';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 function App() {
+
   return (
     <div className="App container-fluid">
       <header className="App-header row">
@@ -13,7 +14,7 @@ function App() {
         </h1>
       </header>
 	  <div className="row">
-		<NewPlayerForm />
+		<GameSetupForm />
 	  </div>
     </div>
   );

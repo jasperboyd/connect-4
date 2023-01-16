@@ -1,20 +1,28 @@
 import React, {Component} from 'react';
 
-export class NewPlayerForm extends Component {
+interface NewPlayerFormProps { 
+	player: any
+	number: number
+	savePlayer: (player:any, index:number) => void
+} 
+
+export class NewPlayerForm extends Component<NewPlayerFormProps> {
 	playerData:any; 
 	state:any;
+	savePlayer: (player:any, index:number) => void
 
-	constructor(props:any) { 
+	constructor(props:NewPlayerFormProps) { 
 		super(props); 
 
+		this.savePlayer = props.savePlayer; 
+
+		this.render = this.render.bind(this);
+		this.callSavePlayer = this.callSavePlayer.bind(this);
 		this.onChangeNickname = this.onChangeNickname.bind(this);
 		this.onChangeAge = this.onChangeAge.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-
-		this.state = { 
-			'nickname': '',
-			'age': ''
-		}  
+		
+		this.state = props.player; 
+		this.state.number = props.number;
 	} 
 
 	onChangeNickname(e:any) { 
@@ -25,16 +33,14 @@ export class NewPlayerForm extends Component {
 		this.setState({ age: e.target.value }); 
 	}
 
-	onSubmit(e:any) { 
+	callSavePlayer(e:any) { 
 		e.preventDefault(); 
-
-		this.setState({
-			nickname: '', 
-			age: ''
-		}); 
+		this.savePlayer(this.state, this.state.number-1);
+		this.setState({ saved: true }); 
 	} 
 
 	// React Life Cycle
+	/*
     componentDidMount() {
 		this.playerData = JSON.parse(localStorage.getItem('player') || "{name:'',age''}");
         if (localStorage.getItem('player')) {
@@ -49,29 +55,39 @@ export class NewPlayerForm extends Component {
             })
         }
     }
-
 	componentDidUpdate(nextProps:any, nextState:any) {
 		console.log('componentUpdate', nextProps, nextState); 
-        localStorage.setItem('player', JSON.stringify(nextState));
-    } 
+		//localStorage.setItem('player', JSON.stringify(nextState));
+		this.savePlayer(nextState, this.state.number-1); 
+	}
+	*/
 
 	render() {
-		return (
-			<form onSubmit={this.onSubmit} name="newPlayerForm" className="col-md">
-				<h2>Welcome New Player!</h2>
-				<p> Please enter your information to start the game. </p>
-				<div className="form-group">
-					<label htmlFor="nickname">Nickname</label> 
-					<input type="text" value={this.state.nickname} onChange={this.onChangeNickname} className="form-control"  name="nickname" />
-				</div> 	
-				<div className="form-group">
-					<label htmlFor="age">Age</label> 
-					<input type="numeric" value={this.state.age} onChange={this.onChangeAge} className="form-control" name="age" />
-				</div> 	
-				<div className="form-group">
-					<button type="submit" className="btn btn-primary">Add Player</button>
+		if(this.state.saved){ 
+			return (
+				<div> 
+					<h2>Player {this.state.number}</h2>
+				<h3>{this.state.nickname}</h3>
+				<h4>{this.state.age} years old</h4> 
 				</div>
-			</form> 
+			);
+		} else { 
+			return (
+
+					<div>
+						<h2>Player {this.state.number}</h2>
+
+						<div className="form-group">
+							<label htmlFor="nickname">Nickname</label> 
+							<input type="text" value={this.state.nickname} onChange={this.onChangeNickname} className="form-control"  name="nickname" />
+							<label htmlFor="age">Age</label> 
+							<input type="numeric" value={this.state.age} onChange={this.onChangeAge} className="form-control" name="age" />
+						</div> 	
+						<div className="form-group">
+							<button onClick={this.callSavePlayer} className="btn btn-primary">Add Player</button>
+						</div>	
+					</div>
 		);
-	} 
+		}
+	}
 } 

@@ -1,3 +1,3 @@
 export type Board = {
-	board:string[][]	
+	board:number[][]	
 }  
