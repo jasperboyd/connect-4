@@ -1,10 +1,47 @@
 .App {
+	font-size: 18px;
 }
+
+.col button {
+	text-align: center; 
+} 
+
+.player-card:first-child{ 
+	text-align: right; 
+} 
+
+.player-color { 
+	height: 2.5em;
+	width: 2.5em;
+	margin: 1em;
+} 
+
+.gameboard .board-space { 
+	margin: 1em auto;
+	height: 1.5em;
+	width: 1.5em;
+} 
+
+.player-color,
+.gameboard .board-space { 
+	text-align: center; 
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	vertical-align: middle;
+	transition: all .5s ease-in-out;
+	transform-origin: left top;
+}
+
+.red { 
+	background-color: #ba3434 !important; 
+} 
+.blue { 
+	background-color: #3473ba !important; 
+} 
 
 
 .gameboard .col { 
-	border: 1px solid black;
-	padding: 1em;
 } 
 
 @media (prefers-reduced-motion: no-preference) {

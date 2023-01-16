@@ -55,7 +55,7 @@ export class GameBoard extends Component<GameBoardProps> {
 					</div> 
 					{ this.state.game.board.board.map( (r:any, ri:number) => (
 						<div className="row" key={ri}>
-							{ r.map( (c:any, i:number) => (<div className="col" key={i}>{c}</div>))}
+						{ r.map( (c:any, i:number) => (<div className="col" key={i}><span className={`board-space ${c===0 ? 'blue' :''} ${c===1 ? 'red' : ''}`}></span></div>))}
 						</div>
 
 					))}
