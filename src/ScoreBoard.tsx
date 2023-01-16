@@ -24,10 +24,10 @@ export class ScoreBoard extends Component<ScoreBoardProps> {
 		return (
 			<div className="row"> 
 				<div className="col-md-6">
-			{this.state.players[0].nickname} - {this.state.players[0].score ? this.state.players[0].score : 0}
+			{this.state.players[0].nickname} - {this.state.players[0].score}
 				</div> 
 				<div className="col-md-6">
-					{this.state.players[1].nickname} - {this.state.players[1].score ? this.state.players[1].score : 0}
+					{this.state.players[1].nickname} - {this.state.players[1].score}
 				</div> 
 			</div> 
 		);  

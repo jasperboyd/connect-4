@@ -50,16 +50,24 @@ export class GameSetupForm extends Component {
 
 	setGameWinner(playerIndex:number, moves:number){ 
 		console.log('winner', playerIndex);
+		let state = {...this.state}; 
 
 		let currentGame = {...this.state.currentGame}
 
 		currentGame.endTime = new Date();
 		currentGame.moves = moves; 
+
+		state.games[0] = currentGame; 
+		state.currentGame = null;
+
+		state.players[playerIndex].score = state.players[playerIndex].score ? state.players[playerIndex].score++ : 1;  
+
+		this.setState(state); 
 	} 
 
-	startGame(){ 
+	startGame(){
+		console.log('starting a new game');
 		let game = {
-			players: [...this.state.players],
 			board: new Board(),
 			moves: 0,
 			stalemate: false,

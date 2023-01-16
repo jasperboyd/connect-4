@@ -30,7 +30,7 @@ export class GameBoard extends Component<GameBoardProps> {
 		
 		this.setState({game:{board: this.state.game.board}}); 
 
-		if(!gameWon) this.nextTurn();
+		if(!gameWon) return this.nextTurn();
 
 		this.setGameWinner(this.state.currentPlayerIndex, this.state.moves);
 	} 
