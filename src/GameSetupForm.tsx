@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import {Board} from './Board';
 import {GameBoard} from './GameBoard';
 import {NewPlayerForm} from './NewPlayerForm';
+import {ScoreBoard} from './ScoreBoard';
 
 export class GameSetupForm extends Component {
 	gameData:any; 
@@ -10,6 +12,7 @@ export class GameSetupForm extends Component {
 		super(props); 
 
 		this.savePlayer = this.savePlayer.bind(this); 
+		this.setGameWinner = this.setGameWinner.bind(this); 
 		this.startGame = this.startGame.bind(this); 
 		//this.onSubmit = this.onSubmit.bind(this);
 
@@ -19,11 +22,13 @@ export class GameSetupForm extends Component {
 				{ 
 					nickname: '',
 					age: '',
+					score: 0,
 					saved: false
 				},
 				{ 
 					nickname: '',
 					age: '',
+					score: 0, 
 					saved: false
 				}
 			],
@@ -41,33 +46,25 @@ export class GameSetupForm extends Component {
 		if(state.players[0].saved && state.players[1].saved){ 
 			this.setState({allPlayersSaved: true}); 
 		} 
+	}
+
+	setGameWinner(playerIndex:number, moves:number){ 
+		console.log('winner', playerIndex);
+
+		let currentGame = {...this.state.currentGame}
+
+		currentGame.endTime = new Date();
+		currentGame.moves = moves; 
 	} 
 
 	startGame(){ 
 		let game = {
 			players: [...this.state.players],
-			board: [
-				[0,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0],
-				[0,0,0,0,0,0,0]
-			],
-			score: {
-				player1: {
-					player: { ...this.state.players[0] },
-					score: 0
-				}, 
-				player2: {
-					plaer: { ...this.state.players[1] },
-					score: 0
-				}, 
-				moves: 0,
-				stalemate: false,
-				startTime: new Date(),
-				endTime: null
-			}
+			board: new Board(),
+			moves: 0,
+			stalemate: false,
+			startTime: new Date(),
+			endTime: null
 		}
 
 		let games = [...this.state.games]; 
@@ -99,11 +96,12 @@ export class GameSetupForm extends Component {
 				{ this.state.players.map( (p:any, i:any) => (<NewPlayerForm key={i} player={p} number={i+1} savePlayer={this.savePlayer} />)) }
 
 				</form> 
-
 			); 
 		} else if (this.state.currentGame == null) { 
 			return (
 				<div>
+					<ScoreBoard players={this.state.players} games={this.state.games} />
+
 					<h1>Ready?</h1> 
 					<div className="player-one-score">
 						<button onClick={this.startGame} className="btn btn-primary">Start Game</button>
@@ -112,7 +110,10 @@ export class GameSetupForm extends Component {
 			); 
 		} else { 
 			return (
-				<GameBoard game={this.state.currentGame} />
+				<div> 
+					<ScoreBoard players={this.state.players} games={this.state.games} />
+					<GameBoard game={this.state.currentGame} setGameWinner={this.setGameWinner} />
+				</div> 	
 			); 
 		} 
 	} 
