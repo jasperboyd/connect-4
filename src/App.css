@@ -1,4 +1,5 @@
 .App {
+	text-align: center;
 	font-size: 18px;
 }
 
@@ -10,22 +11,30 @@
 	text-align: right; 
 } 
 
+.player-card { 
+	text-align: left; 
+} 
+
 .player-color { 
 	height: 2.5em;
 	width: 2.5em;
 	margin: 1em;
 } 
 
+.score {
+	font-weight: 900; 
+}
+
 .gameboard .board-space { 
 	margin: 1em auto;
 	height: 1.5em;
 	width: 1.5em;
+	background-color: white;
 } 
 
 .player-color,
 .gameboard .board-space { 
 	text-align: center; 
-	background-color: #bbb;
 	border-radius: 50%;
 	display: inline-block;
 	vertical-align: middle;
@@ -38,10 +47,18 @@
 } 
 .blue { 
 	background-color: #3473ba !important; 
+}
+.hide { 
+	display: none;
+}
+
+.gameboard .row:first-child .col {
+	background-color: white;
+	padding-bottom: 1em;
 } 
 
-
 .gameboard .col { 
+	background-color: #bbb;
 } 
 
 @media (prefers-reduced-motion: no-preference) {

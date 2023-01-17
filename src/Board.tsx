@@ -1,5 +1,6 @@
 export class Board  {
-
+	moves:number = 0;
+	maxMoves:number = 42;
 	board:any;
 
 	constructor(){ 
@@ -17,12 +18,12 @@ export class Board  {
 		let gameWon = false;
 		for(var i=this.board.length-1; i>=0; i--){ 
 			if(this.board[i][index] === -1){ 
-				this.board[i][index] = playerIndex; 
+				this.board[i][index] = playerIndex;
+				this.moves++;
 				gameWon = this.determineWin(i, index, playerIndex);
 				break;
 			} 
 		}
-		console.log('gameWon', gameWon); 
 		return gameWon; 
 	} 
 
@@ -36,8 +37,6 @@ export class Board  {
 			} else {
 				maxSegment = 0; 
 			} 
-
-			console.log('vertmaxseg', maxSegment, maxSegment === 4); 
 
 			if(maxSegment === 4) return true;
 	
@@ -133,7 +132,11 @@ export class Board  {
 		let diagonalWin = this.checkDiagonalWin(row, column, playerIndex); 
 
 		if(diagonalWin) return true; 
-		
+
+		if(this.moves === this.maxMoves){
+
+		}
+
 		return false;
 	} 
 }  

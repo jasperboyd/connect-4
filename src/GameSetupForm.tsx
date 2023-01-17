@@ -7,14 +7,15 @@ import {ScoreBoard} from './ScoreBoard';
 export class GameSetupForm extends Component {
 	gameData:any; 
 	state:any;
+	showScoreBoard:boolean=false; 
 
 	constructor(props:any) { 
 		super(props); 
 
+		this.goToScoreBoard = this.goToScoreBoard.bind(this); 
 		this.savePlayer = this.savePlayer.bind(this); 
 		this.setGameWinner = this.setGameWinner.bind(this); 
 		this.startGame = this.startGame.bind(this); 
-		//this.onSubmit = this.onSubmit.bind(this);
 
 		this.state = {
 			currentGame: null,
@@ -69,6 +70,7 @@ export class GameSetupForm extends Component {
 		console.log('starting a new game');
 		let game = {
 			board: new Board(),
+			players: [...this.state.players],
 			moves: 0,
 			stalemate: false,
 			startTime: new Date(),
@@ -81,7 +83,11 @@ export class GameSetupForm extends Component {
 
 		this.setState({games: games, currentGame: game}); 
 	} 
-		
+
+	goToScoreBoard() {
+		this.showScoreBoard=true;
+	} 
+
 	componentDidMount() {
 		let appStateString =  localStorage.getItem('appState') || '';
 		if(!appStateString.length) return;
@@ -108,18 +114,22 @@ export class GameSetupForm extends Component {
 		} else if (this.state.currentGame == null) { 
 			return (
 				<div>
-					<ScoreBoard players={this.state.players} games={this.state.games} />
 
 					<h1>Ready?</h1> 
 					<div className="player-one-score">
 						<button onClick={this.startGame} className="btn btn-primary">Start Game</button>
+						<button onClick={this.goToScoreBoard} className="btn">Go To Scoreboard</button>
+
 					</div>
 				</div> 
 			); 
+		} else if(this.showScoreBoard) {
+			return (
+					<ScoreBoard players={this.state.players} games={this.state.games} />
+			);	
 		} else { 
 			return (
 				<div> 
-					<ScoreBoard players={this.state.players} games={this.state.games} />
 					<GameBoard game={this.state.currentGame} setGameWinner={this.setGameWinner} />
 				</div> 	
 			); 

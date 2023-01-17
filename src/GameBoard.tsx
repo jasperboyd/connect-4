@@ -7,7 +7,9 @@ interface GameBoardProps {
 
 export class GameBoard extends Component<GameBoardProps> {
 	game:any; 
+	players: any;
 	setGameWinner: (winnerIndex:number, moves:number)=>void;
+
 	state:any;
 
 	constructor(props:any) { 
@@ -16,13 +18,17 @@ export class GameBoard extends Component<GameBoardProps> {
 		this.makeSelection = this.makeSelection.bind(this); 
 		this.setGameWinner = props.setGameWinner; 
 
+		this.players = [...props.game.players];
+
 		this.state = { 
 			game: props.game,
 			currentPlayerIndex: Math.floor(Math.random() * 2), 
 			score: {
 				moves: 0
 			} 
-		} 
+		}
+
+		console.log(this.state);
 	} 
 
 	makeSelection(index: number){ 
@@ -42,14 +48,24 @@ export class GameBoard extends Component<GameBoardProps> {
 	render(){
 		return (
 			<div>
+				<div className="row"> 
+					<div className="col-md-6 player-card">
+						<span className="player-color blue"></span>
+						{this.players[0].nickname}
+					</div> 
+					<div className="col-md-6 player-card">
+						<span className="player-color red"></span>
+						{this.players[1].nickname} 
+					</div> 
+				</div>				
 				<div className="scoreboard">
 					<h1>Moves: {this.state.score.moves}</h1>
 				</div>
 				<div className="container gameboard"> 
 					<div className="row">
-						{ this.state.game.board.board[0].map( (c:any, i:number) => (
+						{ this.state.game.board.board[0].map( (c:number, i:number) => (
 							<div className="col" key={i}>
-							<button onClick={() => this.makeSelection(i)} className="btn btn-primary" value={i}>Drop Here</button>
+								<button onClick={() => this.makeSelection(i)} className={`btn btn-primary ${c !== -1 ? 'hide' : ''}`} value={i}>Drop Here</button>
 							</div>
 						))}
 					</div> 
