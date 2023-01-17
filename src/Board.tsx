@@ -15,6 +15,10 @@ export class Board  {
 	}
 
 	makeSelection(index:number, playerIndex:number){ 
+		if(this.moves >= this.maxMoves){ 
+			return false; 
+		} 
+
 		let gameWon = false;
 		for(var i=this.board.length-1; i>=0; i--){ 
 			if(this.board[i][index] === -1){ 
@@ -60,7 +64,8 @@ export class Board  {
 	} 
 
 	checkDiagonalWin(row:number, column:number, playerIndex:number){ 
-		//determine start 1
+		//determine start 1, look begining at bottom left of diagonal
+		console.log(row, column);
 
 		let startPositionRow = row, startPositionColumn = column; 
 
@@ -71,16 +76,17 @@ export class Board  {
 
 		let maxSegment = 0; 
 
-		while(startPositionRow !== 0 && startPositionColumn < this.board[0].length){ 
-			//console.log('checking diagonal', startPositionRow, startPositionColumn, this.board[startPositionRow][startPositionColumn]); 
+		console.log('diag1', startPositionRow, startPositionColumn); 
+
+		while(startPositionRow >= 0 && startPositionColumn < this.board[0].length ){ 
+
+			console.log('diag1 check', startPositionRow, startPositionColumn, this.board[startPositionRow][startPositionColumn]);
 
 			if(this.board[startPositionRow][startPositionColumn] === playerIndex){ 
 				maxSegment++; 
 			} else { 
 				maxSegment = 0; 
 			}
-			
-			console.log('MaxSeg', maxSegment); 
 
 			if(maxSegment === 4) return true; 
 
@@ -89,38 +95,38 @@ export class Board  {
 		} 
 
 
-		//determine start 2
+		//determine start 2, look begining at bottom right of diagonal
 		startPositionRow = row; 
 		startPositionColumn = column; 
-
+		
 		while(startPositionRow !== this.board.length - 1 && startPositionColumn < this.board[0].length-1){ 
 			startPositionRow++;
 			startPositionColumn++;
 		} 
+		
+		console.log('diag2', startPositionRow, startPositionColumn); 
 
 		maxSegment = 0; 
 
 		while(startPositionRow >= 0 && startPositionColumn >= 0){ 
-			//console.log('checking diagonal', startPositionRow, startPositionColumn, this.board[startPositionRow][startPositionColumn]); 
+			
+			console.log('diag2 check', startPositionRow, startPositionColumn, this.board[startPositionRow][startPositionColumn]);
 			
 			if(this.board[startPositionRow][startPositionColumn] === playerIndex){ 
 				maxSegment++; 
 			} else { 
 				maxSegment = 0; 
 			}
-			
-			console.log('MaxSeg', maxSegment); 
 	
 			if(maxSegment === 4) return true; 
 
 			startPositionRow--;
-			startPositionColumn++;
+			startPositionColumn--;
 		}	
 		return false; 
 	} 
 
 	determineWin(row:number, column:number, playerIndex:number){ 
-		//check vertical
 		let verticalWin = this.checkVerticalWin(row, column, playerIndex);
 
 		if(verticalWin) return true;
@@ -132,10 +138,6 @@ export class Board  {
 		let diagonalWin = this.checkDiagonalWin(row, column, playerIndex); 
 
 		if(diagonalWin) return true; 
-
-		if(this.moves === this.maxMoves){
-
-		}
 
 		return false;
 	} 

@@ -3,8 +3,25 @@
 	font-size: 18px;
 }
 
+
+.App form {
+	text-align: left; 
+} 
+
+button { 
+	margin-top: 1em; 
+} 
+
+.modal { 
+	display: block;
+} 
+
 .col button {
 	text-align: center; 
+} 
+
+.btn-close {
+	display: none;
 } 
 
 .player-card:first-child{ 
@@ -13,6 +30,15 @@
 
 .player-card { 
 	text-align: left; 
+}
+
+.playing { 
+	font-weight: 800; 
+} 
+
+.playing .player-color { 
+	 height: 3em; 
+	 width: 3em; 
 } 
 
 .player-color { 

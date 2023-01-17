@@ -4,13 +4,23 @@ import {GameBoard} from './GameBoard';
 import {NewPlayerForm} from './NewPlayerForm';
 import {ScoreBoard} from './ScoreBoard';
 
-export class GameSetupForm extends Component {
+interface GameSetupFormProps {
+	modalShow:any; 
+	setModalShow:any;
+} 
+
+export class GameSetupForm extends Component<GameSetupFormProps> {
 	gameData:any; 
 	state:any;
 	showScoreBoard:boolean=false; 
+	modalShow:any; 
+	setModalShow:any;
 
 	constructor(props:any) { 
 		super(props); 
+
+		this.modalShow = props.modalShow; 
+		this.setModalShow = props.setModalShow; 
 
 		this.goToScoreBoard = this.goToScoreBoard.bind(this); 
 		this.savePlayer = this.savePlayer.bind(this); 
@@ -49,43 +59,69 @@ export class GameSetupForm extends Component {
 		} 
 	}
 
-	setGameWinner(playerIndex:number, moves:number){ 
-		console.log('winner', playerIndex);
+	setGameWinner(playerIndex:number, moves:number, destination:string){ 
 		let state = {...this.state}; 
 
 		let currentGame = {...this.state.currentGame}
 
 		currentGame.endTime = new Date();
 		currentGame.moves = moves; 
+		
+		if(playerIndex > -1){ 
+			currentGame.winner = state.players[playerIndex];  
+			state.players[playerIndex].score++;  
+		} else { 
+			currentGame.winner = null; 
+			currentGame.stalemate = true; 
+		}
+
+		currentGame.duration = Math.floor((currentGame.endTime.getTime() - currentGame.startTime.getTime()) / 1000);
 
 		state.games[0] = currentGame; 
 		state.currentGame = null;
 
-		state.players[playerIndex].score = state.players[playerIndex].score ? state.players[playerIndex].score++ : 1;  
 
 		this.setState(state); 
+		localStorage.setItem('appState', JSON.stringify(state));
+
+		if(destination === 'new') this.startGame();
+
+		if(destination === 'scoreboard') this.goToScoreBoard(); 
 	} 
 
 	startGame(){
-		console.log('starting a new game');
+		this.showScoreBoard = false; 
+		
+		let games = [...this.state.games]; 
+
+		let startingPlayerIndex = Math.floor(Math.random() * 2) 
+		if(games.length !== 0){ 
+		
+			startingPlayerIndex = games[0].startingPlayerIndex === 0 ? 1 : 0;
+		} 
+
 		let game = {
+			key: this.state.games.length + 1, 
 			board: new Board(),
 			players: [...this.state.players],
 			moves: 0,
 			stalemate: false,
+			startingPlayerIndex: startingPlayerIndex,
 			startTime: new Date(),
 			endTime: null
 		}
 
-		let games = [...this.state.games]; 
 
-		games.push(game); 
+		games.unshift(game); 
 
 		this.setState({games: games, currentGame: game}); 
+		
+		this.modalShow=false; 
 	} 
 
 	goToScoreBoard() {
 		this.showScoreBoard=true;
+		this.setState({});//force redraw 
 	} 
 
 	componentDidMount() {
@@ -102,35 +138,43 @@ export class GameSetupForm extends Component {
 	render() { 
 		if(!this.state.allPlayersSaved){
 			return (
-				<form name="Game Setup Form">
+				<form name="GameSetupForm">
 				
 				<h2>Welcome New Players!</h2>
 				<p> Please enter your information to start the game. </p>
 
-				{ this.state.players.map( (p:any, i:any) => (<NewPlayerForm key={i} player={p} number={i+1} savePlayer={this.savePlayer} />)) }
+				<div className="row">
+					{ this.state.players.map( (p:any, i:any) => (<NewPlayerForm key={i} player={p} number={i+1} savePlayer={this.savePlayer} />)) }
+				</div>
 
 				</form> 
 			); 
-		} else if (this.state.currentGame == null) { 
+		} else if(this.showScoreBoard) {
+			return (
+				<div>
+					<ScoreBoard players={this.state.players} games={this.state.games} />
+					<button onClick={this.startGame} className="btn btn-primary">Start Game</button>
+				</div>		
+			);	
+		} else if (this.state.currentGame == null && !this.showScoreBoard) { 
 			return (
 				<div>
 
 					<h1>Ready?</h1> 
-					<div className="player-one-score">
-						<button onClick={this.startGame} className="btn btn-primary">Start Game</button>
+					<div>
 						<button onClick={this.goToScoreBoard} className="btn">Go To Scoreboard</button>
-
+						<button onClick={this.startGame} className="btn btn-primary">Start Game</button>
 					</div>
 				</div> 
 			); 
-		} else if(this.showScoreBoard) {
-			return (
-					<ScoreBoard players={this.state.players} games={this.state.games} />
-			);	
 		} else { 
 			return (
 				<div> 
-					<GameBoard game={this.state.currentGame} setGameWinner={this.setGameWinner} />
+				<GameBoard key={this.state.currentGame.key} 
+					game={this.state.currentGame} 
+					setGameWinner={this.setGameWinner} 
+					modalShow={this.modalShow} 
+					setModalShow={this.setModalShow} />
 				</div> 	
 			); 
 		} 

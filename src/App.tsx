@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { GameSetupForm } from './GameSetupForm';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 function App() {
+	const [modalShow, setModalShow] = useState(false);
 
   return (
     <div className="App container-fluid">
@@ -14,7 +15,7 @@ function App() {
         </h1>
       </header>
 	  <div className="row">
-		<GameSetupForm />
+		<GameSetupForm modalShow={modalShow} setModalShow={setModalShow} />
 	  </div>
     </div>
   );
