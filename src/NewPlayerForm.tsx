@@ -64,7 +64,7 @@ export class NewPlayerForm extends Component<NewPlayerFormProps> {
 							<label htmlFor="nickname">Nickname</label> 
 							<input type="text" required value={this.state.nickname} onChange={this.onChangeNickname} className="form-control"  name="nickname" />
 							<label htmlFor="age">Age</label> 
-							<input type="numeric" required value={this.state.age} onChange={this.onChangeAge} className="form-control" name="age" />
+							<input type="number" required value={this.state.age} onChange={this.onChangeAge} className="form-control" name="age" />
 						</div> 	
 						<div className="form-group">
 							<button disabled={this.fieldsMissing} onClick={this.callSavePlayer} className="btn btn-primary">Add Player</button>
