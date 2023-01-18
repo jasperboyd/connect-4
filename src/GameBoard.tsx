@@ -36,8 +36,6 @@ export class GameBoard extends Component<GameBoardProps> {
 				moves: 0
 			} 
 		}
-
-		console.log(this.state);
 	} 
 
 	makeSelection(index: number){ 

@@ -65,8 +65,6 @@ export class Board  {
 
 	checkDiagonalWin(row:number, column:number, playerIndex:number){ 
 		//determine start 1, look begining at bottom left of diagonal
-		console.log(row, column);
-
 		let startPositionRow = row, startPositionColumn = column; 
 
 		while(startPositionRow !== this.board.length - 1 && startPositionColumn !== 0){ 
@@ -76,11 +74,9 @@ export class Board  {
 
 		let maxSegment = 0; 
 
-		console.log('diag1', startPositionRow, startPositionColumn); 
 
 		while(startPositionRow >= 0 && startPositionColumn < this.board[0].length ){ 
 
-			console.log('diag1 check', startPositionRow, startPositionColumn, this.board[startPositionRow][startPositionColumn]);
 
 			if(this.board[startPositionRow][startPositionColumn] === playerIndex){ 
 				maxSegment++; 
@@ -104,13 +100,9 @@ export class Board  {
 			startPositionColumn++;
 		} 
 		
-		console.log('diag2', startPositionRow, startPositionColumn); 
-
 		maxSegment = 0; 
 
 		while(startPositionRow >= 0 && startPositionColumn >= 0){ 
-			
-			console.log('diag2 check', startPositionRow, startPositionColumn, this.board[startPositionRow][startPositionColumn]);
 			
 			if(this.board[startPositionRow][startPositionColumn] === playerIndex){ 
 				maxSegment++; 
