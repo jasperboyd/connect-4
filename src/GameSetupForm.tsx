@@ -75,7 +75,11 @@ export class GameSetupForm extends Component<GameSetupFormProps> {
 			currentGame.stalemate = true; 
 		}
 
-		currentGame.duration = Math.floor((currentGame.endTime.getTime() - currentGame.startTime.getTime()) / 1000);
+		currentGame.durationSeconds = Math.floor((currentGame.endTime.getTime() - currentGame.startTime.getTime()) / 1000);
+		
+		currentGame.durationMinutes = Math.floor(currentGame.durationSeconds / 60);
+
+		currentGame.durationSeconds -= currentGame.durationMinutes * 60
 
 		state.games[0] = currentGame; 
 		state.currentGame = null;

@@ -50,14 +50,14 @@ export class GameOverPopup extends Component<GameOverPopupProps> {
 							this.handleClose(); 
 						}} 
 						variant="secondary">
-						Go To ScoreBoard
+						Go to scoreboard
 					</Button>
 					<Button onClick={() => {
 							this.setGameWinner(this.props.currentPlayerIndex, this.props.moves, 'new');
 							this.handleClose(); 
 						}} 
 						variant="primary">
-						New Game
+						Start a new game
 					</Button>
 					</Modal.Footer>
 			</Modal>

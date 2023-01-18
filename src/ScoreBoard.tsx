@@ -25,7 +25,7 @@ export class ScoreBoard extends Component<ScoreBoardProps> {
 			<div className="container">
 				<div className="row"> 
 					<div className="col-md-6 player-card">
-						<span className="player-color blue"></span>
+						<span className="player-color yellow"></span>
 						{this.state.players[0].nickname} - <span className="score">{this.state.players[0].score}</span>
 					</div> 
 					<div className="col-md-6 player-card">
@@ -51,7 +51,7 @@ export class ScoreBoard extends Component<ScoreBoardProps> {
 								<div className="row" key={i}>
 								<div className="col">{g.winner.nickname}</div>
 								<div className="col">{g.moves}</div>
-								<div className="col">{g.duration} Seconds</div>
+								<div className="col">{g.durationMinutes > 0 ? g.durationMinutes + ' Minutes' : ''}  {g.durationSeconds} Seconds</div>
 								</div>
 						))
 				}  

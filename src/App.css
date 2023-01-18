@@ -3,13 +3,26 @@
 	font-size: 18px;
 }
 
+.App-header h1 .big { 
+	color: #ba3434; 
+} 
+
+.big { 
+	font-size: 2em;
+	vertical-align: middle;
+} 
 
 .App form {
 	text-align: left; 
 } 
 
 button { 
-	margin-top: 1em; 
+	margin-top: 1em;
+	font-weight: 900; 	
+}
+
+.btn { 
+	border: none; 
 } 
 
 .modal { 
@@ -68,6 +81,10 @@ button {
 	transform-origin: left top;
 }
 
+.yellow { 
+	color: black !important; 
+	background-color: #ffe002 !important; 	
+} 
 .red { 
 	background-color: #ba3434 !important; 
 } 
@@ -84,7 +101,7 @@ button {
 } 
 
 .gameboard .col { 
-	background-color: #bbb;
+	background-color: #3473ba;
 } 
 
 @media (prefers-reduced-motion: no-preference) {

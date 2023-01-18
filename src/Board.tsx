@@ -35,7 +35,7 @@ export class Board  {
 
 		let maxSegment = 0; 
 
-		for(var i=this.board.length-1; i>0; i--){
+		for(var i=this.board.length-1; i>=0; i--){
 			if(this.board[i][column] === playerIndex){ 
 				maxSegment++;
 			} else {

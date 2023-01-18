@@ -11,7 +11,7 @@ function App() {
     <div className="App container-fluid">
       <header className="App-header row">
         <h1>
-			Connect 4
+			Connect <span className="big">4</span>
         </h1>
       </header>
 	  <div className="row">

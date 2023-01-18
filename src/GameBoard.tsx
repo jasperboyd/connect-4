@@ -64,7 +64,7 @@ export class GameBoard extends Component<GameBoardProps> {
 			<div>
 				<div className="row"> 
 					<div className={`col-md-6 player-card ${this.state.currentPlayerIndex === 0 ? 'playing' : ''}`}>
-						<span className="player-color blue"></span>
+						<span className="player-color yellow"></span>
 						{this.players[0].nickname}
 					</div> 
 					<div className={`col-md-6 player-card ${this.state.currentPlayerIndex === 1 ? 'playing' : ''}`}>
@@ -76,13 +76,13 @@ export class GameBoard extends Component<GameBoardProps> {
 					<div className="row">
 						{ this.state.game.board.board[0].map( (c:number, i:number) => (
 							<div className="col" key={i}>
-								<button onClick={() => this.makeSelection(i)} className={`btn btn-primary ${this.state.currentPlayerIndex === 0 ? 'blue' :'red'} ${c !== -1 ? 'hide' : ''}`} value={i}>Drop Here</button>
+								<button onClick={() => this.makeSelection(i)} className={`btn btn-primary ${this.state.currentPlayerIndex === 0 ? 'yellow' :'red'} ${c !== -1 ? 'hide' : ''}`} value={i}>Drop Here</button>
 							</div>
 						))}
 					</div> 
 					{ this.state.game.board.board.map( (r:any, ri:number) => (
 						<div className="row" key={ri}>
-						{ r.map( (c:any, i:number) => (<div className="col" key={i}><span className={`board-space ${c===0 ? 'blue' :''} ${c===1 ? 'red' : ''}`}></span></div>))}
+						{ r.map( (c:any, i:number) => (<div className="col" key={i}><span className={`board-space ${c===0 ? 'yellow' :''} ${c===1 ? 'red' : ''}`}></span></div>))}
 						</div>
 
 					))}
