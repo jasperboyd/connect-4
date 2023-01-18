@@ -49,9 +49,9 @@ export class ScoreBoard extends Component<ScoreBoardProps> {
 				{ this.state.games.map(
 						(g:any,i:number)=> (
 								<div className="row" key={i}>
-								<div className="col">{g.winner.nickname}</div>
-								<div className="col">{g.moves}</div>
-								<div className="col">{g.durationMinutes > 0 ? g.durationMinutes + ' Minutes' : ''}  {g.durationSeconds} Seconds</div>
+									<div className="col">{ g.winner ? g.winner.nickname : 'Stalemate'}</div>
+									<div className="col">{ g.moves }</div>
+									<div className="col">{ g.durationMinutes > 0 ? g.durationMinutes + ' Minutes' : ''}  {g.durationSeconds} Seconds</div>
 								</div>
 						))
 				}  
